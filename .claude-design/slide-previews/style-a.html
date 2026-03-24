@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style A — Burnt Paper</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Work+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0908;
+            --text: #f0ebe4;
+            --text-muted: #9a928a;
+            --accent: #c87941;
+            --accent-glow: rgba(200, 121, 65, 0.15);
+            --cream: #f5f2ed;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            position: relative;
+            font-family: 'Work Sans', sans-serif;
+            color: var(--text);
+        }
+
+        /* Grain overlay */
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Warm radial glow behind content */
+        .slide::after {
+            content: '';
+            position: absolute;
+            width: 60vw;
+            height: 60vh;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: min(85vw, 800px);
+        }
+
+        /* Thin rule above */
+        .rule {
+            width: clamp(40px, 8vw, 80px);
+            height: 1px;
+            background: var(--accent);
+            margin: 0 auto clamp(1rem, 3vh, 2.5rem);
+            opacity: 0;
+            animation: fadeWidth 1s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .overline {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 500;
+            font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: clamp(0.5rem, 1.5vh, 1rem);
+            opacity: 0;
+            animation: fadeUp 0.8s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        h1 {
+            font-family: 'Fraunces', serif;
+            font-weight: 900;
+            font-size: clamp(2.2rem, 7vw, 5.5rem);
+            line-height: 1.05;
+            color: var(--cream);
+            margin-bottom: clamp(0.8rem, 2vh, 1.5rem);
+            opacity: 0;
+            animation: fadeUp 1s 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        h1 em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+
+        .subtitle {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 300;
+            font-size: clamp(0.85rem, 1.8vw, 1.2rem);
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 32ch;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeUp 0.8s 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Corner marks — editorial registration marks */
+        .corner-mark {
+            position: absolute;
+            width: clamp(16px, 3vw, 28px);
+            height: clamp(16px, 3vw, 28px);
+            border-color: var(--accent);
+            border-style: solid;
+            opacity: 0;
+            animation: fadeIn 0.6s 1.3s ease forwards;
+        }
+
+        .corner-mark.tl {
+            top: clamp(1rem, 3vw, 2.5rem);
+            left: clamp(1rem, 3vw, 2.5rem);
+            border-width: 1px 0 0 1px;
+        }
+
+        .corner-mark.tr {
+            top: clamp(1rem, 3vw, 2.5rem);
+            right: clamp(1rem, 3vw, 2.5rem);
+            border-width: 1px 1px 0 0;
+        }
+
+        .corner-mark.bl {
+            bottom: clamp(1rem, 3vw, 2.5rem);
+            left: clamp(1rem, 3vw, 2.5rem);
+            border-width: 0 0 1px 1px;
+        }
+
+        .corner-mark.br {
+            bottom: clamp(1rem, 3vw, 2.5rem);
+            right: clamp(1rem, 3vw, 2.5rem);
+            border-width: 0 1px 1px 0;
+        }
+
+        /* Bottom metadata line */
+        .meta {
+            position: absolute;
+            bottom: clamp(1rem, 3vw, 2.5rem);
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(0.55rem, 0.9vw, 0.7rem);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            opacity: 0;
+            animation: fadeIn 0.6s 1.5s ease forwards;
+            z-index: 2;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeWidth {
+            from {
+                opacity: 0;
+                width: 0;
+            }
+
+            to {
+                opacity: 1;
+                width: clamp(40px, 8vw, 80px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="slide">
+        <div class="corner-mark tl"></div>
+        <div class="corner-mark tr"></div>
+        <div class="corner-mark bl"></div>
+        <div class="corner-mark br"></div>
+
+        <div class="content">
+            <div class="rule"></div>
+            <p class="overline">Show & Learn · March 2026</p>
+            <h1>Vibe <em>Coding</em></h1>
+            <p class="subtitle">How to let the agent do your job — without hitting the rate limit.</p>
+        </div>
+
+        <p class="meta">William Lundvald · Frontend Engineering</p>
+    </section>
+</body>
+
+</html>

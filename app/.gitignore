@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# ONNX model files (~262MB)
+public/assets/onnx/*.onnx
+
+# ONNX Runtime WASM binaries
+public/ort-wasm-*
+
+# Environment
+.env
+.env.local
