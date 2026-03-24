@@ -1,6 +1,6 @@
 # Tech Meetup - 24 Mar 2026
 
-This presentation was vibe coded.
+This presentation was vibe coded, using the same rules and techniques that I share in the presentation.
 
 I started off by talking with an LLM about which topics to touch on for this presentation. This is the [instructions.md](instructions.md) file that guided the AI's contributions.
 
